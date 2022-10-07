@@ -1,44 +1,54 @@
-import math
+from typing import Any
+import trig
+import cmd
+from functools import reduce
+import operator
+
+# TODO: use doc comments from trig.py (see help_area_of_triangle)
 
 
-def herons(side_a: float, side_b: float, side_c: float):
-    semi_perimeter = (side_a + side_b + side_c) / 2
-    return math.sqrt(
-        (
-            semi_perimeter
-            * (semi_perimeter - side_a)
-            * (semi_perimeter - side_b)
-            * (semi_perimeter - side_c)
-        )
-    )
+class graphShell(cmd.Cmd):
+    intro = "Welcome to the math shell, '?' to view a list of commands \n"
+    prompt = "(math) >>> "
+
+    def do_add(self, arg: Any):
+        """Add n numbers together"""
+        print(sum(parse(arg)))
+
+    def do_subtract(self, arg: Any):
+        """Subtracts n numbers from 0"""
+        print(reduce(operator.sub, parse(arg)))
+
+    def do_multiply(self, arg: Any):
+        """Multiplys n numbers togther"""
+        print(reduce(operator.mul, parse(arg)))
+
+    def do_divide(self, arg: Any):
+        """Divides n numbers from the first value"""
+        print(reduce(operator.truediv, parse(arg)))
+
+    def do_area_of_triangle(self, arg: Any):
+        print(trig.herons(*parse(arg)))
+
+    def do_area_of_oblique_triangle(self, arg: Any):
+        print(trig.area_of_oblique_triangle(*parse(arg)))
+
+    def do_law_of_sines(self, arg: Any):
+        print(trig.law_of_sines(*parse(arg)))
+
+    def do_law_of_cosines(self, arg: Any):
+        print(trig.law_of_cosines(*parse(arg)))
+
+    def help_area_of_triangle(self):
+        print(trig.herons.__doc__)
+
+    def do_exit(self, arg: Any):
+        quit()
 
 
-def law_of_sines(
-    side_a: float, angle_a: float, side_b: float = None, angle_b: float = None
-):
-    if side_b and angle_b:
-        return None
-    elif side_b:
-        return round(
-            math.degrees(
-                math.asin(
-                    math.radians(
-                        (side_b * (math.degrees(math.sin(math.radians(angle_a)))))
-                        / side_a
-                    )
-                )
-            ),
-            3,
-        )
-    elif angle_b:
-        return (
-            side_a
-            * math.degrees(math.sin(math.radians(angle_b)))
-            / math.degrees(math.sin(math.radians(angle_a)))
-        )
+def parse(arg):
+    return tuple(map(int, arg.split()))
 
 
-def law_of_cosines(
-    side_a: float, side_b: float, side_c: float = None, angle_c: float = None
-):
-    pass
+if __name__ == "__main__":
+    graphShell().cmdloop()
