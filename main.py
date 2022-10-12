@@ -45,6 +45,9 @@ class graphShell(cmd.Cmd):
     def do_exit(self, _: Any):
         quit()
 
+    # NOTE: for the solve eq function check if there are args and if not ask for the eq
+    # NOTE: also make sure to print to the user to use the variable x (include in doc string?)
+
 
 def parse(arg):
     return tuple(map(int, arg.split()))

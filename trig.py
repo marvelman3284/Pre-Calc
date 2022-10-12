@@ -1,5 +1,6 @@
 import math
 import turtle
+from typing import Optional
 
 
 # TODO: turtle visualization
@@ -21,18 +22,18 @@ def draw_triangle(
 
 
 # area of a triangle
-def herons(side_a: float, side_b: float, side_c: float):
+def herons(side_a: float, side_b: float, side_c: float) -> float:
     """Return the area of a triangle.
 
     Using heron's formula calculate the area of a triangle
 
     Args:
-        side_1: a float side length
-        side_2: a float side length
-        side_3: a float side length
+        side_1: a side length
+        side_2: a side length
+        side_3: a side length
 
     Returns:
-        The area of the triangle (float)
+        The area of the triangle
     """
 
     semi_perimeter = (side_a + side_b + side_c) / 2
@@ -51,18 +52,44 @@ def herons(side_a: float, side_b: float, side_c: float):
 
 def area_of_oblique_triangle(side_a: float, side_b: float, angle_c: float) -> float:
     """
-    Given two sides and an angle find the area of a triangle
+    Returns the area of a triangle given two sides and an angle.
+
+    Using the formula A = 0.5*A*B*sin(c) return the area of a triangle.
+
+    Args:
+        side_a: side length.
+        side_b: a float side length.
+        angle_c: angle measure (in degrees).
+
+    Returns:
+        The area of a triangle.
     """
+
     return round(((side_a * side_b) * (math.sin(math.radians(angle_c))) / 2), 2)
 
 
 # law of sines and cosines
 def law_of_sines(
-    side_a: float, angle_a: float, side_b: float = None, angle_b: float = None
+    side_a: float,
+    angle_a: float,
+    side_b: Optional[float] = None,
+    angle_b: Optional[float] = None,
 ) -> float:
     """
-    Given an angle, a side, and either a second angle or side return the missing angle or side using law of sines
+    Return a missing angle or side of a triangle using the law of sines.
+
+    Using the law of sines (sin(a)/A = sin(b)/B) find either angle a or side A
+
+    Args:
+        side_a: a side length.
+        angle_a: an angle measurement (in degrees)
+        side_b: a side length.
+        angle_b: an angle measurement (in degrees)
+
+    Returns:
+        A missing side or angle (measured in degrees)
     """
+
     if side_b and angle_b:
         return 0
     elif side_b:
@@ -84,12 +111,22 @@ def law_of_sines(
             / math.degrees(math.sin(math.radians(angle_a))),
             2,
         )
+    else:
+        return 0
 
 
 def law_of_cosines(
-    side_a: float, side_b: float, side_c: float = None, angle_c: float = None
+    side_a: float,
+    side_b: float,
+    side_c: Optional[float] = None,
+    angle_c: Optional[float] = None,
 ) -> float:
-    """Given two sides and either a third side or an angle return either the missing side or angle"""
+    """
+    Returns a missing side or angle using the law of cosines.
+
+    Using the formula C^2 = A^2 + B^2 - 2*A*B*cos(C) find either side C or angle c.
+    """
+
     if side_c:
         return round(
             math.degrees(
@@ -110,6 +147,8 @@ def law_of_cosines(
             ),
             2,
         )
+    else:
+        return 0
 
 
 # Angular and linear speed
