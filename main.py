@@ -42,7 +42,7 @@ class graphShell(cmd.Cmd):
     def help_area_of_triangle(self):
         print(trig.herons.__doc__)
 
-    def do_exit(self, arg: Any):
+    def do_exit(self, _: Any):
         quit()
 
 
