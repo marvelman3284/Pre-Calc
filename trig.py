@@ -28,12 +28,12 @@ def herons(side_a: float, side_b: float, side_c: float) -> float:
     Using heron's formula calculate the area of a triangle
 
     Args:
-        side_1: a side length
-        side_2: a side length
-        side_3: a side length
+        side_1 (float): a side length
+        side_2 (float): a side length
+        side_3 (float): a side length
 
     Returns:
-        The area of the triangle
+        float: The area of the triangle
     """
 
     semi_perimeter = (side_a + side_b + side_c) / 2
@@ -57,12 +57,12 @@ def area_of_oblique_triangle(side_a: float, side_b: float, angle_c: float) -> fl
     Using the formula A = 0.5*A*B*sin(c) return the area of a triangle.
 
     Args:
-        side_a: side length.
-        side_b: a float side length.
-        angle_c: angle measure (in degrees).
+        side_a (float): side length.
+        side_b (float): a float side length.
+        angle_c (flaot): angle measure (in degrees).
 
     Returns:
-        The area of a triangle.
+        float: The area of a triangle.
     """
 
     return round(((side_a * side_b) * (math.sin(math.radians(angle_c))) / 2), 2)
@@ -78,16 +78,16 @@ def law_of_sines(
     """
     Return a missing angle or side of a triangle using the law of sines.
 
-    Using the law of sines (sin(a)/A = sin(b)/B) find either angle a or side A
+    Using the law of sines (sin(a)/A = sin(b)/B) find either angle b or side B
 
     Args:
-        side_a: a side length.
-        angle_a: an angle measurement (in degrees)
-        side_b: a side length.
-        angle_b: an angle measurement (in degrees)
+        side_a (float): a side length.
+        angle_a (float): an angle measurement (in degrees)
+        side_b (Optional[float]): a side length.
+        angle_b (Optional[float]): an angle measurement (in degrees)
 
     Returns:
-        A missing side or angle (measured in degrees)
+        float: A missing side or angle (measured in degrees)
     """
 
     if side_b and angle_b:
@@ -122,9 +122,18 @@ def law_of_cosines(
     angle_c: Optional[float] = None,
 ) -> float:
     """
-    Returns a missing side or angle using the law of cosines.
+    Return a missing angle or side of a triangle using the law of cosines.
 
-    Using the formula C^2 = A^2 + B^2 - 2*A*B*cos(C) find either side C or angle c.
+    Using the law of cosines (C^2 = A^2 + B^2 - 2AB * cos(c)) find either angle c or side C
+
+    Args:
+        side_a (float): a side length.
+        side_b (float): a side length.
+        side_c (Optional[float]): a side length.
+        angle_c (Optional[float]): an angle measurement (in degrees)
+
+    Returns:
+        float: A missing side or angle (measured in degrees)
     """
 
     if side_c:
@@ -154,41 +163,49 @@ def law_of_cosines(
 # Angular and linear speed
 def angular_speed(central_angle: float) -> float:
     """
-    Given the central angle return the angular speed (in radians)
+    Return the angular speed (measured in radians)
+
+    Using the formula angular speed = (2pi * theta) / time ( assumed to be 1) return the angular speed
+
+    Args:
+        central_angle (float): the central angle (measured in radians)
+    Returns:
+        float: the angular speed (measured in radians)
     """
+
     return central_angle * 2 * math.pi
 
 
 def linear_speed(central_angle: float, radius: float) -> float:
     """
-    Given the central angle and the radius return the linear speed (in radians)
+    Return the linear speed (measured in radians)
+
+    Using the formula linear speed = (angular_speed * radius) / time (assumed to be 1) return the linear speed
+
+    Args:
+        central_angle (float): the central angle (measured in radians)
+        radius (float): the radius
+    Returns:
+        float: the linear speed (measured in radians)
     """
+
     return round(angular_speed(central_angle) * radius, 2)
 
 
 def solve(
     side_a: float,
-    angle_a: float = None,
-    side_b: float = None,
-    angle_b: float = None,
-    side_c: float = None,
-    angle_c: float = None,
+    angle_a: float,
+    side_b: Optional[float] = None,
+    angle_b: Optional[float] = None,
+    side_c: Optional[float] = None,
+    angle_c: Optional[float] = None,
 ):
-    if side_a and side_b and side_c:
-        angle_c = law_of_cosines(side_a, side_b, side_c)
-        angle_b = law_of_sines(side_c, angle_c, side_b)
-        angle_a = 180 - angle_b - angle_c
-        #
-        # if 180 - angle_b + angle_c < 180:
-        #     angle_b_prime = 180 - angle_b
-        #     angle_a_prime = 180 - angle_b_prime - angle_c
-        #
-        #     print(
-        #         f"Ambigous case: angle a: {angle_a_prime}, angle_b: {angle_b_prime}, angle_c: {angle_c}"
-        #     )
+    """
+    Return a dictionary with the missing sides/angles of a triangle.
 
-        return f"angle a: {angle_a}, angle_b: {angle_b}, angle_c: {angle_c}"
-
+    Given a side, an angle, and either a second side or angle solve for the remaining sides/angles of a triangle
+    """
+    pass
 
 # print(solve(side_a=318, side_b=206, side_c=193))
 if __name__ == "__main__":

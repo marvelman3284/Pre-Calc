@@ -74,8 +74,8 @@ def graph_eq(
     Given an equation and an amount of points, graph the equation
 
     Args:
-        eq (str): an equation
-        num_points (list[int]): a list containing the start and stop of the range
+        eq (str): an equation, either passed into the function or collected as user input
+        num_points (list[int]): a list containing the start and stop of the range, collected as user input
         title (Optional[str]): the title of the figure, defaults to "figure 1"
         x_ticks (Optional[list[str]]): a list of strings to use as the x tick lables, defaults to None
         y_ticks (Optional[list[str]]): a list of strings to use as the y tick lables, defaults to None
