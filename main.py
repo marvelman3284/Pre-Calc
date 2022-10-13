@@ -1,8 +1,12 @@
+import os
 from typing import Any
-import trig
-import cmd
 from functools import reduce
+
+import cmd
 import operator
+
+import trig
+import graph
 
 # TODO: use doc comments from trig.py (see help_area_of_triangle)
 
@@ -39,8 +43,27 @@ class graphShell(cmd.Cmd):
     def do_law_of_cosines(self, arg: Any):
         print(trig.law_of_cosines(*parse(arg)))
 
+    def do_graph(self, arg: Any):
+        if not arg:
+            arg = input("Enter the equation: ")
+
+        start = int(input("Enter the start for the range: "))
+        stop = int(input("Enter the stop for the  range: "))
+        num_points = [start, stop]
+
+        graph.graph_eq(arg, num_points)
+
+    def help_graph(self):
+        print(graph.graph_eq.__doc__)
+
     def help_area_of_triangle(self):
         print(trig.herons.__doc__)
+
+    def do_clear(self, _: Any):
+        """
+        Clears the screen
+        """
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def do_exit(self, _: Any):
         quit()
