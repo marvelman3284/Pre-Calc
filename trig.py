@@ -23,7 +23,8 @@ def draw_triangle(
 
 # area of a triangle
 def herons(side_a: float, side_b: float, side_c: float) -> float:
-    """Return the area of a triangle.
+    """
+    Return the area of a triangle.
 
     Using heron's formula calculate the area of a triangle
 
@@ -192,21 +193,65 @@ def linear_speed(central_angle: float, radius: float) -> float:
     return round(angular_speed(central_angle) * radius, 2)
 
 
-def solve(
-    side_a: float,
-    angle_a: float,
-    side_b: Optional[float] = None,
-    angle_b: Optional[float] = None,
-    side_c: Optional[float] = None,
-    angle_c: Optional[float] = None,
-):
+def solve(sides: list[float], angles: list[float]) -> dict:
     """
     Return a dictionary with the missing sides/angles of a triangle.
 
     Given a side, an angle, and either a second side or angle solve for the remaining sides/angles of a triangle
-    """
-    pass
 
-# print(solve(side_a=318, side_b=206, side_c=193))
+    Args:
+        sides (list[float]): list of sides (at least 1 is required)
+        angles (list[float]): list of angles measured in degrees (at least 1 is required)
+    """
+
+    triangle: dict[str, list[float]] = {
+        "side_a": [],
+        "side_b": [],
+        "side_c": [],
+        "angle_a": [],
+        "angle_b": [],
+        "angle_c": [],
+    }
+
+    if len(sides) == 2 and len(angles) == 1:
+        # deal with triangle 1 first
+        second_angle = law_of_sines(side_a=sides[0], side_b=sides[1], angle_a=angles[0])
+        third_angle = round(180 - angles[0] - second_angle, 2)
+
+        if angles[0] + second_angle + third_angle > 180:
+            print("Triangle cannot exist!")
+            return {}
+
+        third_side = law_of_sines(
+            side_a=sides[0], angle_a=angles[0], angle_b=third_angle
+        )
+
+        # check for a second triangle:
+        second_angle_prime = (
+            180 - second_angle if (180 - second_angle) + angles[0] < 180 else 0
+        )
+
+        # triangle 1
+        triangle["angle_a"].append(angles[0])
+        triangle["angle_b"].append(second_angle)
+        triangle["angle_c"].append(third_angle)
+        triangle["side_a"].append(sides[0])
+        triangle["side_b"].append(sides[1])
+        triangle["side_c"].append(third_side)
+
+        if second_angle_prime != 0:
+            triangle["angle_b"].append(second_angle_prime)
+            third_angle_prime = round(180 - angles[0] - second_angle_prime, 2)
+
+            triangle["angle_c"].append(third_angle_prime)
+            triangle["side_c"].append(
+                law_of_sines(
+                    side_a=sides[0], angle_a=angles[0], angle_b=third_angle_prime
+                )
+            )
+
+    return triangle
+
+
 if __name__ == "__main__":
-    pass
+    print(solve(sides=[16, 20], angles=[48]))
