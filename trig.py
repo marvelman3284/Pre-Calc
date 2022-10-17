@@ -205,8 +205,6 @@ def solve(sides: list[float], angles: list[float]) -> dict:
         angles (list[float]): list of angles measured in degrees  (order matters: [angle_a, angle_b, angle_c])
     """
 
-    # TODO: sss
-
     triangle: dict[str, list[float]] = {
         "side_a": [],
         "side_b": [],
@@ -287,6 +285,4 @@ def solve(sides: list[float], angles: list[float]) -> dict:
 
 
 if __name__ == "__main__":
-    # print(solve(sides=[16, 20], angles=[48]))
-    # print(solve(sides=[12.6], angles=[105, 41]))
-    print(solve(sides=[3.5, 5.1, 7.9], angles=[]))
+    pass
