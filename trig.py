@@ -201,9 +201,11 @@ def solve(sides: list[float], angles: list[float]) -> dict:
     Given a side, an angle, and either a second side or angle solve for the remaining sides/angles of a triangle
 
     Args:
-        sides (list[float]): list of sides (at least 1 is required)
-        angles (list[float]): list of angles measured in degrees (at least 1 is required)
+        sides (list[float]): list of sides (order matters: [side_a, side_b, side_c])
+        angles (list[float]): list of angles measured in degrees  (order matters: [angle_a, angle_b, angle_c])
     """
+
+    # TODO: sss
 
     triangle: dict[str, list[float]] = {
         "side_a": [],
@@ -214,7 +216,7 @@ def solve(sides: list[float], angles: list[float]) -> dict:
         "angle_c": [],
     }
 
-    if len(sides) == 2 and len(angles) == 1:
+    if len(sides) == 2 and len(angles) == 1:  # ssa case (no bad words in math)
         # deal with triangle 1 first
         second_angle = law_of_sines(side_a=sides[0], side_b=sides[1], angle_a=angles[0])
         third_angle = round(180 - angles[0] - second_angle, 2)
@@ -251,8 +253,40 @@ def solve(sides: list[float], angles: list[float]) -> dict:
                 )
             )
 
+    elif len(angles) == 2 and len(sides) == 1:  # aas
+        second_side = law_of_sines(
+            side_a=sides[0], angle_a=angles[0], angle_b=angles[1]
+        )
+
+        third_angle = 180 - angles[0] - angles[1]
+
+        third_side = law_of_sines(
+            side_a=sides[0], angle_a=angles[0], angle_b=third_angle
+        )
+
+        triangle["side_a"].append(sides[0])
+        triangle["side_b"].append(second_side)
+        triangle["side_c"].append(third_side)
+        triangle["angle_a"].append(angles[0])
+        triangle["angle_b"].append(angles[1])
+        triangle["angle_c"].append(third_angle)
+
+    elif len(sides) == 3 and len(angles) == 0:  # sss
+        first_angle = law_of_cosines(sides[0], sides[1], sides[2])
+        second_angle = law_of_cosines(sides[1], sides[2], sides[0])
+        third_angle = law_of_cosines(sides[2], sides[0], sides[1])
+
+        triangle["side_a"].append(sides[0])
+        triangle["side_b"].append(sides[1])
+        triangle["side_c"].append(sides[2])
+        triangle["angle_a"].append(first_angle)
+        triangle["angle_b"].append(second_angle)
+        triangle["angle_c"].append(third_angle)
+
     return triangle
 
 
 if __name__ == "__main__":
-    print(solve(sides=[16, 20], angles=[48]))
+    # print(solve(sides=[16, 20], angles=[48]))
+    # print(solve(sides=[12.6], angles=[105, 41]))
+    print(solve(sides=[3.5, 5.1, 7.9], angles=[]))
