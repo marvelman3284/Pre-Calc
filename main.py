@@ -20,7 +20,7 @@ class graphShell(cmd.Cmd):
         print(sum(parse(arg)))
 
     def do_subtract(self, arg: Any):
-        """Subtracts n numbers from 0"""
+        """Subtracts n numbers from each other"""
         print(reduce(operator.sub, parse(arg)))
 
     def do_multiply(self, arg: Any):
