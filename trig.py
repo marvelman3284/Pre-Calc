@@ -1,6 +1,7 @@
 import math
 import turtle
 from typing import Optional
+from rich import print
 
 
 # TODO: turtle visualization

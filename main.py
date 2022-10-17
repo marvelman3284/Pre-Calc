@@ -1,6 +1,7 @@
 import os
 from typing import Any
 from functools import reduce
+from rich import print
 
 import cmd
 import operator
@@ -63,7 +64,7 @@ class graphShell(cmd.Cmd):
         """
         Clears the screen
         """
-        os.system('cls' if os.name == 'nt' else 'clear')
+        os.system("cls" if os.name == "nt" else "clear")
 
     def do_exit(self, _: Any):
         quit()
@@ -77,4 +78,8 @@ def parse(arg):
 
 
 if __name__ == "__main__":
-    graphShell().cmdloop()
+    while True:
+        try:
+            graphShell().cmdloop()
+        except Exception:
+            continue
