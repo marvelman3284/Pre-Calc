@@ -2,14 +2,16 @@ import os
 from typing import Any
 from functools import reduce
 from rich import print
+import math
 
 import cmd
 import operator
 
 import trig
 import graph
+import symplify as sy
 
-# TODO: use doc comments from trig.py (see help_area_of_triangle)
+# TODO: write better doc comments for bultins
 
 
 class graphShell(cmd.Cmd):
@@ -44,6 +46,30 @@ class graphShell(cmd.Cmd):
     def do_law_of_cosines(self, arg: Any):
         print(trig.law_of_cosines(*parse(arg)))
 
+    def do_sin(self, arg: Any):
+        """Print the sine (in degrees) of a number (in degrees)"""
+        print(math.sin(math.radians(*parse(arg))))
+
+    def do_cos(self, arg: Any):
+        """Print the cosine (in degrees) of a number (in degrees)"""
+        print(math.cos(math.radians(*parse(arg))))
+
+    def do_tan(self, arg: Any):
+        """Print the tangent (in degrees) of a number (in degrees)"""
+        print(math.tan(math.radians(*parse(arg))))
+
+    def do_arcsin(self, arg: Any):
+        """Print the arcsin (in degrees) of a number (in degrees)"""
+        print(math.asin(math.radians(*parse(arg))))
+
+    def do_arccos(self, arg: Any):
+        """Print the arccos (in degrees) of a number (in degrees)"""
+        print(math.acos(math.radians(*parse(arg))))
+
+    def do_arctan(self, arg: Any):
+        """Print the arctan (in degrees) of a number (in degrees)"""
+        print(math.atan(math.radians(*parse(arg))))
+
     def do_graph(self, arg: Any):
         if not arg:
             arg = input("Enter the equation: ")
@@ -54,12 +80,32 @@ class graphShell(cmd.Cmd):
 
         graph.graph_eq(arg, num_points)
 
+    def do_solve(self, arg: Any):
+        if arg != "":
+            print(sy.solve(arg))
+        else:
+            print(sy.solve())
+
+    # help functions
+    def help_solve(self):
+        print(sy.solve.__doc__)
+
     def help_graph(self):
         print(graph.graph_eq.__doc__)
 
     def help_area_of_triangle(self):
         print(trig.herons.__doc__)
 
+    def help_area_of_oblique_triangle(self):
+        print(trig.area_of_oblique_triangle.__doc__)
+
+    def help_law_of_cosines(self):
+        print(trig.law_of_cosines.__doc__)
+
+    def help_law_of_sines(self):
+        print(trig.law_of_sines.__doc__)
+
+    # system/helper function
     def do_clear(self, _: Any):
         """
         Clears the screen
@@ -67,6 +113,9 @@ class graphShell(cmd.Cmd):
         os.system("cls" if os.name == "nt" else "clear")
 
     def do_exit(self, _: Any):
+        """
+        Quits the program
+        """
         quit()
 
     # NOTE: for the solve eq function check if there are args and if not ask for the eq

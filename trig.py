@@ -1,25 +1,6 @@
 import math
-import turtle
 from typing import Optional
 from rich import print
-
-
-# TODO: turtle visualization
-def draw_triangle(
-    side_a: float,
-    side_b: float,
-    side_c: float,
-    angle_a: float,
-    angle_c: float,
-) -> None:
-
-    t = turtle.Turtle()
-
-    t.forward(side_a)
-    t.right(angle_c)
-    t.forward(side_b)
-    t.right(angle_a)
-    t.forward(side_c)
 
 
 # area of a triangle
@@ -39,16 +20,13 @@ def herons(side_a: float, side_b: float, side_c: float) -> float:
     """
 
     semi_perimeter = (side_a + side_b + side_c) / 2
-    return round(
-        math.sqrt(
-            (
-                semi_perimeter
-                * (semi_perimeter - side_a)
-                * (semi_perimeter - side_b)
-                * (semi_perimeter - side_c)
-            )
-        ),
-        2,
+    math.sqrt(
+        (
+            semi_perimeter
+            * (semi_perimeter - side_a)
+            * (semi_perimeter - side_b)
+            * (semi_perimeter - side_c)
+        )
     )
 
 
@@ -67,7 +45,7 @@ def area_of_oblique_triangle(side_a: float, side_b: float, angle_c: float) -> fl
         float: The area of a triangle.
     """
 
-    return round(((side_a * side_b) * (math.sin(math.radians(angle_c))) / 2), 2)
+    return (side_a * side_b) * (math.sin(math.radians(angle_c))) / 2
 
 
 # law of sines and cosines
@@ -95,23 +73,18 @@ def law_of_sines(
     if side_b and angle_b:
         return 0
     elif side_b:
-        return round(
-            math.degrees(
-                math.asin(
-                    math.radians(
-                        (side_b * (math.degrees(math.sin(math.radians(angle_a)))))
-                        / side_a
-                    )
+        math.degrees(
+            math.asin(
+                math.radians(
+                    (side_b * (math.degrees(math.sin(math.radians(angle_a))))) / side_a
                 )
-            ),
-            2,
+            )
         )
     elif angle_b:
-        return round(
+        return (
             side_a
             * math.degrees(math.sin(math.radians(angle_b)))
             / math.degrees(math.sin(math.radians(angle_a))),
-            2,
         )
     else:
         return 0
@@ -139,24 +112,18 @@ def law_of_cosines(
     """
 
     if side_c:
-        return round(
-            math.degrees(
-                math.acos(
-                    (side_c ** 2 - side_a ** 2 - side_b ** 2) / (-2 * side_a * side_b)
-                )
-            ),
-            2,
+        return math.degrees(
+            math.acos(
+                (side_c ** 2 - side_a ** 2 - side_b ** 2) / (-2 * side_a * side_b)
+            )
         )
     elif angle_c:
-        return round(
-            math.sqrt(
-                (
-                    (side_a ** 2)
-                    + (side_b ** 2)
-                    - 2 * side_a * side_b * math.cos(math.radians(angle_c))
-                )
-            ),
-            2,
+        return math.sqrt(
+            (
+                (side_a ** 2)
+                + (side_b ** 2)
+                - 2 * side_a * side_b * math.cos(math.radians(angle_c))
+            )
         )
     else:
         return 0
@@ -217,7 +184,7 @@ def solve(sides: list[float], angles: list[float]) -> dict:
     if len(sides) == 2 and len(angles) == 1:  # ssa case (no bad words in math)
         # deal with triangle 1 first
         second_angle = law_of_sines(side_a=sides[0], side_b=sides[1], angle_a=angles[0])
-        third_angle = round(180 - angles[0] - second_angle, 2)
+        third_angle = 180 - angles[0] - second_angle
 
         if angles[0] + second_angle + third_angle > 180:
             print("Triangle cannot exist!")
@@ -242,7 +209,7 @@ def solve(sides: list[float], angles: list[float]) -> dict:
 
         if second_angle_prime != 0:
             triangle["angle_b"].append(second_angle_prime)
-            third_angle_prime = round(180 - angles[0] - second_angle_prime, 2)
+            third_angle_prime = 180 - angles[0] - second_angle_prime
 
             triangle["angle_c"].append(third_angle_prime)
             triangle["side_c"].append(
@@ -285,4 +252,5 @@ def solve(sides: list[float], angles: list[float]) -> dict:
 
 
 if __name__ == "__main__":
-    pass
+    # draw_triangle(50, 100, 100, 36, 72)
+    print(solve(sides=[3.5, 5.1, 7.9], angles=[]))
