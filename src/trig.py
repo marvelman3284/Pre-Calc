@@ -1,11 +1,6 @@
 import math
 from typing import Optional
 from rich import print
-from helpers.types import Point, Vector
-
-
-def distance(p1: Point, p2: Point) -> float:
-    pass
 
 # area of a triangle
 def herons(side_a: float, side_b: float, side_c: float) -> float:
@@ -256,5 +251,4 @@ def solve(sides: list[float], angles: list[float]) -> dict:
 
 
 if __name__ == "__main__":
-    # draw_triangle(50, 100, 100, 36, 72)
-    print(solve(sides=[3.5, 5.1, 7.9], angles=[]))
+    pass

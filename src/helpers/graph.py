@@ -2,6 +2,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 import sympy as sp
+from helpers.types import Point, Vector
+
+
+def scale(vec: Vector, scalar: float):
+    return vec.scale(scalar)
+
+
+def dot(v1: Vector, v2: Vector) -> int:
+    return (v1.i * v2.i) + (v1.j * v2.j) + (v1.k * v2.k)
+
+
+def distance(p1: Point, p2: Point) -> float:
+    return np.sqrt(
+        (np.pow(p2.x - p1.x, 2) + np.pow(p2.y - p1.y, 2) + np.pow(p2.z - p1.z, 2))
+    )
+
 
 # TODO: graphing functions
 
