@@ -11,27 +11,57 @@ import trig
 import graph
 import symplify as sy
 
-# TODO: write better doc comments for bultins
-
 
 class graphShell(cmd.Cmd):
     intro = "Welcome to the math shell, '?' to view a list of commands \n"
     prompt = "(math) >>> "
 
     def do_add(self, arg: Any):
-        """Add n numbers together"""
+        """
+        Returns the sum of n numbers.
+
+        Args:
+            *args (int): the numbers to be added together
+
+        Returns:
+            int: the sum of *args
+        """
         print(sum(parse(arg)))
 
     def do_subtract(self, arg: Any):
-        """Subtracts n numbers from each other"""
+        """
+        Returns the difference of n numbers.
+
+        Args:
+            *args (int): the numbers to be subtracted from each other
+
+        Returns:
+            int: the difference of *args
+        """
         print(reduce(operator.sub, parse(arg)))
 
     def do_multiply(self, arg: Any):
-        """Multiplys n numbers togther"""
+        """
+        Returns the product of n numbers.
+
+        Args:
+            *args (int): the numbers to be multiplied together
+
+        Returns:
+            int: the product of *args
+        """
         print(reduce(operator.mul, parse(arg)))
 
     def do_divide(self, arg: Any):
-        """Divides n numbers from the first value"""
+        """
+        Returns the quotient of n numbers.
+
+        Args:
+            *args (int): the numbers to be divided from together
+
+        Returns:
+            int: the product of *args
+        """
         print(reduce(operator.truediv, parse(arg)))
 
     def do_area_of_triangle(self, arg: Any):
@@ -47,27 +77,21 @@ class graphShell(cmd.Cmd):
         print(trig.law_of_cosines(*parse(arg)))
 
     def do_sin(self, arg: Any):
-        """Print the sine (in degrees) of a number (in degrees)"""
         print(math.sin(math.radians(*parse(arg))))
 
     def do_cos(self, arg: Any):
-        """Print the cosine (in degrees) of a number (in degrees)"""
         print(math.cos(math.radians(*parse(arg))))
 
     def do_tan(self, arg: Any):
-        """Print the tangent (in degrees) of a number (in degrees)"""
         print(math.tan(math.radians(*parse(arg))))
 
     def do_arcsin(self, arg: Any):
-        """Print the arcsin (in degrees) of a number (in degrees)"""
         print(math.asin(math.radians(*parse(arg))))
 
     def do_arccos(self, arg: Any):
-        """Print the arccos (in degrees) of a number (in degrees)"""
         print(math.acos(math.radians(*parse(arg))))
 
     def do_arctan(self, arg: Any):
-        """Print the arctan (in degrees) of a number (in degrees)"""
         print(math.atan(math.radians(*parse(arg))))
 
     def do_graph(self, arg: Any):
@@ -86,7 +110,16 @@ class graphShell(cmd.Cmd):
         else:
             print(sy.solve())
 
+    def do_expand(self, arg: Any):
+        if arg != "":
+            print(sy.expand(arg))
+        else:
+            print(sy.expand())
+
     # help functions
+    def help_expand(self):
+        print(sy.expand.__doc__)
+
     def help_solve(self):
         print(sy.solve.__doc__)
 
@@ -105,6 +138,36 @@ class graphShell(cmd.Cmd):
     def help_law_of_sines(self):
         print(trig.law_of_sines.__doc__)
 
+    def help_sin(self):
+        doc = (math.sin.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
+    def help_cos(self):
+        doc = (math.cos.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
+    def help_tan(self):
+        doc = (math.tan.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
+    def help_arcsin(self):
+        doc = (math.asin.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
+    def help_arccos(self):
+        doc = (math.acos.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
+    def help_arctan(self):
+        doc = (math.atan.__doc__).split()
+        doc[7] = "degrees)"
+        print(" ".join(doc))
+
     # system/helper function
     def do_clear(self, _: Any):
         """
@@ -117,9 +180,6 @@ class graphShell(cmd.Cmd):
         Quits the program
         """
         quit()
-
-    # NOTE: for the solve eq function check if there are args and if not ask for the eq
-    # NOTE: also make sure to print to the user to use the variable x (include in doc string?)
 
 
 def parse(arg):

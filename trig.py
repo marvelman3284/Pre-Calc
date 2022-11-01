@@ -1,7 +1,11 @@
 import math
 from typing import Optional
 from rich import print
+from types import Point, Vector
 
+
+def distance(p1: Point, p2: Point) -> float:
+    pass
 
 # area of a triangle
 def herons(side_a: float, side_b: float, side_c: float) -> float:

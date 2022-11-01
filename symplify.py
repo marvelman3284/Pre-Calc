@@ -1,4 +1,5 @@
 import sympy as sp
+from sympy import init_printing
 from sympy.abc import x
 from typing import Optional
 
@@ -30,9 +31,15 @@ def clean_equation(eq: str):
         return clean_equation(new_eq)
 
 
-def expand_eq(eq: Optional[str] = ""):
+def expand(eq: Optional[str] = ""):
     """
     Returns an expanded equation.
+
+    Given (or inputted) an equation expand it into its largest form.
+
+    Example:
+        >>> expand("(x+3)*(x+4)")
+        x**2 + 7*x + 12
 
     Args:
         eq (Optional[str]): a string equation
