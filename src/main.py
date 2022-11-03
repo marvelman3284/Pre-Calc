@@ -2,14 +2,15 @@ import os
 from typing import Any
 from functools import reduce
 from rich import print
+import numpy as np
 import math
 
 import cmd
 import operator
 
 import trig
-import src.helpers.graph as graph
-import src.helpers.symplify as sy
+import helpers.graph as graph
+import helpers.symplify as sy
 
 
 class graphShell(cmd.Cmd):
@@ -77,22 +78,22 @@ class graphShell(cmd.Cmd):
         print(trig.law_of_cosines(*parse(arg)))
 
     def do_sin(self, arg: Any):
-        print(math.sin(math.radians(*parse(arg))))
+        print(np.sin(np.radians(*parse(arg))))
 
     def do_cos(self, arg: Any):
-        print(math.cos(math.radians(*parse(arg))))
+        print(np.cos(np.radians(*parse(arg))))
 
     def do_tan(self, arg: Any):
-        print(math.tan(math.radians(*parse(arg))))
+        print(np.tan(np.radians(*parse(arg))))
 
     def do_arcsin(self, arg: Any):
-        print(math.asin(math.radians(*parse(arg))))
+        print(np.arcsin(np.radians(*parse(arg))))
 
     def do_arccos(self, arg: Any):
-        print(math.acos(math.radians(*parse(arg))))
+        print(np.arccos(np.radians(*parse(arg))))
 
     def do_arctan(self, arg: Any):
-        print(math.atan(math.radians(*parse(arg))))
+        print(np.arctan(np.radians(*parse(arg))))
 
     def do_graph(self, arg: Any):
         if not arg:

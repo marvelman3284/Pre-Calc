@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Point:
     def __init__(self, x: float, y: float, z: float = 0):
         self.x = x
@@ -23,6 +26,7 @@ class Point:
         return f"({self.x}, {self.y}, {self.z})" if self.z else f"({self.x}, {self.y})"
 
 
+# TODO: __add__, __mul__ (dot/scale), __sub__, __truediv__
 class Vector:
     def __init__(self, i: float, j: float, k: float = 0):
         self.i = i
@@ -30,7 +34,7 @@ class Vector:
         self.k = k
 
     def __repr__(self) -> str:
-        return f"<types.Vector(i={self.i}, j={self.j}, z={self.z})>"
+        return f"<types.Vector(i={self.i}, j={self.j}, k={self.k})>"
 
     def __str__(self) -> str:
         return f"<{self.i}, {self.j}, {self.k}>" if self.k else f"<{self.i}, {self.j}>"
@@ -38,7 +42,24 @@ class Vector:
     def __add__(self, __o: object):
         return Vector(i=self.i + __o.i, j=self.j + __o.j, k=self.k + __o.k)
 
+    def __sub__(self, __o: object):
+        if type(__o) != Vector:
+            raise TypeError(
+                f"unsupported operand type(s) for -:'{type(self)}' and '{type(__o)}"
+            )
+        return Vector(i=self.i - __o.i, j=self.j - __o.j, k=self.k - __o.k)
+
+    def magnitude(self) -> float:
+        return np.sqrt(pow(self.i, 2) + pow(self.j, 2) + pow(self.k, 2))
+
     def scale(self, scalar: float):
         self.i *= scalar
         self.j *= scalar
         self.k *= scalar
+
+    def dot(self, __o: object) -> float:
+        if type(__o) != Vector:
+            raise TypeError(
+                f"unsupported operand type(s) for dot product: '{type(self)}' and '{type(__o)}'"
+            )
+        return (self.i * __o.i) + (self.j * __o.j) + (self.k * __o.k)
