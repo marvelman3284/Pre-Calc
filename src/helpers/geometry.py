@@ -58,7 +58,7 @@ class Vector:
         return f"<{self.i}, {self.j}, {self.k}>" if self.k else f"<{self.i}, {self.j}>"
 
     def __add__(self, __o: object):
-        if type(__o) != Point:
+        if type(__o) != Vector:
             raise TypeError(
                 f"unsupported operand type(s) for +:'{type(self)}' and '{type(__o)}"
             )
