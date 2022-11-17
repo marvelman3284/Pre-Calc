@@ -1,7 +1,9 @@
 from sly import Parser
 import os
-import helpers.geometry as geo
+from logic.geometry import Vector as vector
+from logic.geometry import Point as point
 from lexer import CalcLexer
+
 
 class CalcParser(Parser):
     debugfile = "sly.out"
@@ -36,6 +38,12 @@ class CalcParser(Parser):
 
         return p[0]
 
+    # TODO: use '?' to list avalible function
+    # also need to write doc comments in parser.py and in geo.py
+    @_("HELP func")
+    def statement(self, p):
+        print(eval(f"{p.func[0]}.__doc__"))
+
     # TODO: custom error file to raise custom errors
 
     @_("TYPE func")
@@ -56,7 +64,7 @@ class CalcParser(Parser):
 
     @_("VECTOR func")
     def expr(self, p):
-        p = geo.Vector(*p.func)
+        p = vector(*p.func)
         return p
 
     @_('expr "+" expr')
@@ -89,7 +97,7 @@ class CalcParser(Parser):
 
     @_("POINT func")
     def expr(self, p):
-        p = geo.Point(*p.func)
+        p = point(*p.func)
         return p
 
     @_('"(" expr ")"')
@@ -111,3 +119,7 @@ class CalcParser(Parser):
         except LookupError:
             print(f"Undefined name '{p.NAME}'")
             return
+
+    @_("STR")
+    def expr(self, p):
+        return p.STR[1:-1]

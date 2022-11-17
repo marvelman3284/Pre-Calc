@@ -3,7 +3,7 @@ import re
 
 
 class CalcLexer(Lexer):
-    tokens = {FUNC, NUMBER, EQ, POW, EXIT, CLEAR, POINT, VECTOR, TYPE, NAME}
+    tokens = {FUNC, HELP, NUMBER, STR, EQ, POW, EXIT, CLEAR, POINT, VECTOR, TYPE, NAME}
     ignore = " \t"
     ignore_comment = r"\#.*"
     literals = {".", "=", "+", "-", "*", "/", "(", ")", ","}
@@ -12,11 +12,13 @@ class CalcLexer(Lexer):
     NAME = r"[a-zA-Z_][a-zA-Z0-9_]*"
     POW = r"\*\*"
     EQ = r"=="
+    STR = r'".*"'
     NAME["vector"] = VECTOR
     NAME["clear"] = CLEAR
     NAME["exit"] = EXIT
     NAME["point"] = POINT
     NAME["type"] = TYPE
+    NAME["help"] = HELP
 
     @_(r"\d+")
     def NUMBER(self, t):

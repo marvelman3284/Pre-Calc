@@ -2,6 +2,8 @@ import numpy as np
 
 
 class Point:
+    """A point in 2-D or 3-D space"""
+
     def __init__(self, x: float, y: float, z: float = 0):
         self.x = x
         self.y = y
@@ -26,22 +28,24 @@ class Point:
         return f"({self.x}, {self.y}, {self.z})" if self.z else f"({self.x}, {self.y})"
 
     def __add__(self, __o: object):
-        if type(__o) != Point:
+        if not isinstance(__o, Point):
             raise TypeError(
                 f"unsupported operand type(s) for +:'{type(self)}' and '{type(__o)}"
             )
         return Point(x=self.x + __o.x, y=self.y + __o.y, z=self.z + __o.z)
 
     def __sub__(self, __o: object):
-        if type(__o) != Point:
+        if not isinstance(__o, Point):
             raise TypeError(
                 f"unsupported operand type(s) for -:'{type(self)}' and '{type(__o)}"
             )
         return Point(x=self.x - __o.x, y=self.y - __o.y, z=self.z - __o.z)
 
 
-# TODO: __add__, __mul__ (dot/scale), __sub__, __truediv__
+# TODO: __mul__ (dot/scale), __sub__, __truediv__
 class Vector:
+    """A vector in 2-D or 3-D space"""
+
     def __init__(self, i: float, j: float, k: float = 0):
         self.i = i
         self.j = j
@@ -57,15 +61,25 @@ class Vector:
     def __str__(self) -> str:
         return f"<{self.i}, {self.j}, {self.k}>" if self.k else f"<{self.i}, {self.j}>"
 
+    def __eq__(self, __o: object) -> bool:
+        return (
+            (
+                (self.i == __o.i and self.j == __o.j and self.k == __o.k)
+                or (self.cross(__o) == Vector(0, 0, 0))
+            )  # DOC: if the cross product of two vectors is a zero vector, then the two vectors are scalar multiples, so they must be equal
+            if isinstance(__o, Vector)
+            else False
+        )
+
     def __add__(self, __o: object):
-        if type(__o) != Vector:
+        if not isinstance(__o, Vector):
             raise TypeError(
                 f"unsupported operand type(s) for +:'{type(self)}' and '{type(__o)}"
             )
         return Vector(i=self.i + __o.i, j=self.j + __o.j, k=self.k + __o.k)
 
     def __sub__(self, __o: object):
-        if type(__o) != Vector:
+        if not isinstance(__o, Vector):
             raise TypeError(
                 f"unsupported operand type(s) for -:'{type(self)}' and '{type(__o)}"
             )
@@ -85,8 +99,28 @@ class Vector:
         )
 
     def dot(self, __o: object) -> float:
-        if type(__o) != Vector:
+        if not isinstance(__o, Vector):
             raise TypeError(
                 f"unsupported operand type(s) for dot product: '{type(self)}' and '{type(__o)}'"
             )
         return (self.i * __o.i) + (self.j * __o.j) + (self.k * __o.k)
+
+    def cross(self, __o: object):
+        if not isinstance(__o, Vector):
+            raise TypeError(
+                f"unsupported operand type(s) for cross product: '{type(self)}' and '{type(__o)}'"
+            )
+        return Vector(
+            i=(self.j * __o.k - self.k * __o.j),
+            j=(self.k * __o.i - self.i * __o.k),
+            k=(self.i * __o.j - self.j * __o.i),
+        )
+
+    def angle(self, __o: object):
+        if not isinstance(__o, Vector):
+            raise TypeError(
+                f"unsupported operand type(s) for finding the angle: '{type(self)}' and '{type(__o)}'"
+            )
+        return round(
+            np.arccos((self.dot(__o) / (self.magnitude() * __o.magnitude()))), 2
+        )
