@@ -3,6 +3,7 @@ import os
 from logic.geometry import Vector as vector
 from logic.geometry import Point as point
 from lexer import CalcLexer
+from numpy import *
 
 
 class CalcParser(Parser):
@@ -35,8 +36,11 @@ class CalcParser(Parser):
         for idx, arg in enumerate(p[0]):
             if arg in self.names:
                 p[0][idx] = self.names[arg]
-
         return p[0]
+
+    @_("NAME func")
+    def expr(self, p):
+        return eval(f"{p.NAME}({p.func[0]})")
 
     # TODO: use '?' to list avalible function
     # also need to write doc comments in parser.py and in geo.py

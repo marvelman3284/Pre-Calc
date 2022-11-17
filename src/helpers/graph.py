@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 import sympy as sp
-from helpers.types import Point, Vector
+from src.logic.geometry import Point, Vector
 
 
 def scale(vec: Vector, scalar: float):

@@ -1,9 +1,25 @@
 from sly import Lexer
 import re
+import logic.trig as trig
 
 
 class CalcLexer(Lexer):
-    tokens = {FUNC, HELP, NUMBER, STR, EQ, POW, EXIT, CLEAR, POINT, VECTOR, TYPE, NAME}
+    tokens = {
+        FUNC,
+        HELP,
+        NUMBER,
+        STR,
+        EQ,
+        GRAPH,
+        SOLVE,
+        POW,
+        EXIT,
+        CLEAR,
+        POINT,
+        VECTOR,
+        TYPE,
+        NAME,
+    }
     ignore = " \t"
     ignore_comment = r"\#.*"
     literals = {".", "=", "+", "-", "*", "/", "(", ")", ","}
@@ -19,10 +35,17 @@ class CalcLexer(Lexer):
     NAME["point"] = POINT
     NAME["type"] = TYPE
     NAME["help"] = HELP
+    NAME["graph"] = GRAPH
+    NAME["solve"] = SOLVE
 
-    @_(r"\d+")
+    # @_(r"(\d+\.\d+)")
+    # def FLOAT(self, t):
+    #     t.value = float(t.value)
+    #     return t
+
+    @_(r"(\d+\.\d+)|(\d+)")
     def NUMBER(self, t):
-        t.value = int(t.value)
+        t.value = float(t.value) if "." in t.value else int(t.value)
         return t
 
     @_(r"\([a-zA-Z0-9_\, \(\)]*\)")
