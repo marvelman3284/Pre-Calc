@@ -22,7 +22,7 @@ class CalcLexer(Lexer):
     }
     ignore = " \t"
     ignore_comment = r"\#.*"
-    literals = {".", "=", "+", "-", "*", "/", "(", ")", ","}
+    literals = {".", "=", "+", "-", "*", "/", "?", "(", ")", ","}
 
     # Tokens
     NAME = r"[a-zA-Z_][a-zA-Z0-9_]*"

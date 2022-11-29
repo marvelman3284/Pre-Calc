@@ -3,9 +3,11 @@ import os
 from logic.geometry import Vector as vector
 from logic.geometry import Point as point
 from lexer import CalcLexer
+from rich import print
 from numpy import *
 from helpers.graph import *
 from helpers.symplify import *
+from logic.trig import *
 
 
 class CalcParser(Parser):
@@ -70,7 +72,13 @@ class CalcParser(Parser):
     # also need to write doc comments in parser.py and in geo.py
     @_("HELP func")
     def statement(self, p):
+        if p.func[0] is None:
+            print("Use help(object) to get help on an object")
         print(eval(f"{p.func[0]}.__doc__"))
+
+    @_('"?"')
+    def statement(self, p):
+        print("Use help(object) to get help on an object")
 
     # TODO: custom error file to raise custom errors
 

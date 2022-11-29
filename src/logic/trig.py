@@ -20,7 +20,7 @@ def herons(side_a: float, side_b: float, side_c: float) -> float:
     """
 
     semi_perimeter = (side_a + side_b + side_c) / 2
-    np.sqrt(
+    return np.sqrt(
         (
             semi_perimeter
             * (semi_perimeter - side_a)
@@ -159,7 +159,7 @@ def linear_speed(central_angle: float, radius: float) -> float:
     return round(angular_speed(central_angle) * radius, 2)
 
 
-def solve(sides: list[float], angles: list[float]) -> dict:
+def solve_triangle(sides: list[float], angles: list[float]) -> dict:
     """
     Return a dictionary with the missing sides/angles of a triangle.
 
