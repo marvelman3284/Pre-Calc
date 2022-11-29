@@ -42,6 +42,13 @@ class CalcParser(Parser):
                 p[0][idx] = self.names[arg]
         return p[0]
 
+    @_("LIST")
+    def expr(self, p):
+        for idx, arg in enumerate(p[0]):
+            if arg in self.names:
+                p[0][idx] = self.names[arg]
+        return p[0]
+
     # TODO: unpack function, replace commas w newlines?
     @_("PRINT func")
     def statement(self, p):
@@ -56,6 +63,10 @@ class CalcParser(Parser):
 
         function = function + ")"
         return eval(function)
+
+    @_("NAME LIST")
+    def expr(self, p):
+        return self.names[p.NAME][p.LIST[0]]
 
     @_("RUN func")
     def expr(self, p):
@@ -131,10 +142,6 @@ class CalcParser(Parser):
     def expr(self, p):
         return p[0][int(p[1][0])]
 
-    @_("LIST")
-    def expr(self, p):
-        return p.LIST
-
     @_("NUMBER")
     def expr(self, p):
         return p.NUMBER
@@ -163,6 +170,8 @@ class CalcParser(Parser):
         except LookupError:
             print(f"Undefined name '{p.NAME}'")
             return
+
+    
 
     @_("STR")
     def expr(self, p):
