@@ -18,6 +18,7 @@ class CalcLexer(Lexer):
         TYPE,
         PRINT,
         NAME,
+        RUN,
     }
     ignore = " \t"
     ignore_comment = r"\#.*"
@@ -35,18 +36,14 @@ class CalcLexer(Lexer):
     NAME["type"] = TYPE
     NAME["help"] = HELP
     NAME["print"] = PRINT
-
-    # @_(r"(\d+\.\d+)")
-    # def FLOAT(self, t):
-    #     t.value = float(t.value)
-    #     return t
+    NAME["run"] = RUN
 
     @_(r"(\d+\.\d+)|(\d+)")
     def NUMBER(self, t):
         t.value = float(t.value) if "." in t.value else int(t.value)
         return t
 
-    @_(r'\(([a-zA-Z0-9_\, ])*(\".*\")*\)')
+    @_(r"\(([a-zA-Z0-9_\, ])*(\".*\")*\)")
     def FUNC(self, t):
         t.value = re.sub(r"[() ]", "", t.value)
         values = []
@@ -76,7 +73,7 @@ class CalcLexer(Lexer):
             return t
 
         for i in t.value.split(","):
-            if i[0] == "\"" and i[-1] == "\"":
+            if i[0] == '"' and i[-1] == '"':
                 i = re.sub(r"[\"]", "", i)
                 values.append(str(i))
             elif re.match(r"\d", i):
