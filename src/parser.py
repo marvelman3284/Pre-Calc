@@ -33,8 +33,7 @@ class CalcParser(Parser):
     def statement(self, p):
         print(p.expr)
 
-    @_("FUNC",
-       "LIST")
+    @_("FUNC")
     def func(self, p):
         for idx, arg in enumerate(p[0]):
             if arg in self.names:
@@ -55,6 +54,17 @@ class CalcParser(Parser):
 
         function = function + ")"
         return eval(function)
+
+    @_("RUN func")
+    def expr(self, p):
+        lexer = CalcLexer()
+        parser = CalcParser()
+        file = p.func[0]
+        with open(file, "r") as f:
+            code = f.readlines()
+
+        for line in code:
+            parser.parse((lexer.tokenize(line)))
 
     # TODO: use '?' to list avalible function
     # also need to write doc comments in parser.py and in geo.py
