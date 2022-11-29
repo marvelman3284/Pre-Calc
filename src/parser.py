@@ -4,6 +4,8 @@ from logic.geometry import Vector as vector
 from logic.geometry import Point as point
 from lexer import CalcLexer
 from numpy import *
+from helpers.graph import *
+from helpers.symplify import *
 
 
 class CalcParser(Parser):
@@ -31,16 +33,28 @@ class CalcParser(Parser):
     def statement(self, p):
         print(p.expr)
 
-    @_("FUNC")
+    @_("FUNC",
+       "LIST")
     def func(self, p):
         for idx, arg in enumerate(p[0]):
             if arg in self.names:
                 p[0][idx] = self.names[arg]
         return p[0]
 
+    # TODO: unpack function, replace commas w newlines?
+    @_("PRINT func")
+    def statement(self, p):
+        for i in p.func:
+            print(i)
+
     @_("NAME func")
     def expr(self, p):
-        return eval(f"{p.NAME}({p.func[0]})")
+        function = f"{p.NAME}("
+        for i in p.func:
+            function = function + str(i) + ","
+
+        function = function + ")"
+        return eval(function)
 
     # TODO: use '?' to list avalible function
     # also need to write doc comments in parser.py and in geo.py
@@ -94,6 +108,14 @@ class CalcParser(Parser):
     @_('"-" expr %prec UMINUS')
     def expr(self, p):
         return -p.expr
+
+    @_("LIST LIST")
+    def expr(self, p):
+        return p[0][int(p[1][0])]
+
+    @_("LIST")
+    def expr(self, p):
+        return p.LIST
 
     @_("NUMBER")
     def expr(self, p):

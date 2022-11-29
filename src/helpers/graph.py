@@ -2,15 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 import sympy as sp
-from src.logic.geometry import Point, Vector
+from logic.geometry import Point 
 
-
-def scale(vec: Vector, scalar: float):
-    return vec.scale(scalar)
-
-
-def dot(v1: Vector, v2: Vector) -> int:
-    return (v1.i * v2.i) + (v1.j * v2.j) + (v1.k * v2.k)
 
 
 def distance(p1: Point, p2: Point) -> float:
@@ -79,7 +72,7 @@ def clean_equations(eq: str):
 
 def graph_eq(
     eq: str,
-    num_points: list[int],
+    num_points: Optional[list[int]] = [-10, 10],
     title: Optional[str] = "Figure 1",
     x_ticks: Optional[list[str]] = None,
     y_ticks: Optional[list[str]] = None,
@@ -91,7 +84,7 @@ def graph_eq(
 
     Args:
         eq (str): an equation, either passed into the function or collected as user input
-        num_points (list[int]): a list containing the start and stop of the range, collected as user input
+        num_points (Optional[list[int]]): a list containing the start and stop of the range, collected as user input, defaults as -10 to 10
         title (Optional[str]): the title of the figure, defaults to "figure 1"
         x_ticks (Optional[list[str]]): a list of strings to use as the x tick lables, defaults to None
         y_ticks (Optional[list[str]]): a list of strings to use as the y tick lables, defaults to None
