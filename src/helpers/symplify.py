@@ -51,7 +51,7 @@ def expand(eq: Optional[str] = ""):
     return eq.expand()
 
 
-def solve(eq: Optional[str] = "") -> list:
+def solve_eq(eq: Optional[str] = "") -> list:
     """
     Return a set of solutions of a given equation (solves for x).
 
