@@ -1,3 +1,10 @@
+# TODO: output to latex
+# - write to latex file
+# - execute the command to view latex
+#   - latex {file}.tex
+#   - xdvi {file}.dvi
+# TODO: write a readme
+
 from lexer import CalcLexer
 from parser import CalcParser
 import sys

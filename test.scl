@@ -1,0 +1,5 @@
+x = vector(1, 2)
+y = vector(2, 3)
+z = x.magnitude()
+a = x.cross(y)
+print(x, y, z, a)

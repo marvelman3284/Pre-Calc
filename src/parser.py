@@ -73,11 +73,14 @@ class CalcParser(Parser):
         lexer = CalcLexer()
         parser = CalcParser()
         file = p.func[0]
+
         with open(file, "r") as f:
             code = f.readlines()
 
-        for line in code:
-            parser.parse((lexer.tokenize(line)))
+        for i, line in enumerate(code):
+            parser.parse(lexer.tokenize(line))
+
+        # print(f"Out[{i}]: {parser.parse(lexer.tokenize(line))}")
 
     # TODO: use '?' to list avalible function
     # also need to write doc comments in parser.py and in geo.py

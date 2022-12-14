@@ -121,6 +121,31 @@ class Vector:
             raise TypeError(
                 f"unsupported operand type(s) for finding the angle: '{type(self)}' and '{type(__o)}'"
             )
+        if self.dot(__o) == 0:
+            return 90  # DOC: if the dot product of two vectors is 0, they must be orthogonal
         return round(
-            np.arccos((self.dot(__o) / (self.magnitude() * __o.magnitude()))), 2
+            np.degrees(np.arccos((self.dot(__o) / (self.magnitude() * __o.magnitude())))), 2
+        )
+
+
+class Plane:
+    def __init__(
+        self,
+        vector: Vector,
+        point: Point,
+    ):
+        self.vector = vector
+        self.point = point
+
+    def make_plane(self) -> str:
+        return f"{self.vector.i}(x-{self.point.x}) + {self.vector.j}(y-{self.point.y}) + {self.vector.k}(z-{self.point.z}) = 0"
+
+    def angle(self, __o: object):
+        if not isinstance(__o, Plane):
+            raise TypeError(
+                f"unsupported operand type(s) for finding the angle: '{type(self)}' and '{type(__o)}'"
+            )
+        return np.arccos(
+            abs(self.vector.dot(__o.vector))
+            / (self.vector.magnitude() * __o.vector.magnitude)
         )
