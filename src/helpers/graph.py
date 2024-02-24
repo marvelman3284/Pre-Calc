@@ -2,8 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import Optional
 import sympy as sp
-from logic.geometry import Point 
-
+from logic.geometry import Point
 
 
 def distance(p1: Point, p2: Point) -> float:
@@ -70,6 +69,8 @@ def clean_equations(eq: str):
         return clean_equations(new_eq)
 
 
+# TODO: trig eq's
+# sin, cos, tan, etc
 def graph_eq(
     eq: str,
     num_points: Optional[list[int]] = [-10, 10],

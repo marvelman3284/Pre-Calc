@@ -1,0 +1,3 @@
+x = vector(1, 2)
+y = x.magnitude()
+print(y)

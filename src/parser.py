@@ -22,6 +22,9 @@ class CalcParser(Parser):
         ("right", "POW"),
         ("left", "EQ"),
         ("left", "FUNC"),
+        ("left", ">", "<"),
+        ("left", "LTE", "GTE"),
+        ("left", "=")
     )
 
     def __init__(self):
@@ -101,6 +104,22 @@ class CalcParser(Parser):
     def expr(self, p):
         return p.expr0 == p.expr1
 
+    @_("expr '>' expr")
+    def expr(self, p):
+        return p.expr0 > p.expr1
+
+    @_("expr '<' expr")
+    def expr(self, p):
+        return p.expr0 < p.expr1
+
+    @_("expr GTE expr")
+    def expr(self, p):
+        return p.expr0 >= p.expr1
+
+    @_("expr LTE expr")
+    def expr(self, p):
+        return p.expr0 <= p.expr1
+
     @_('expr "." NAME func')
     def expr(self, p):
         return (
@@ -170,8 +189,6 @@ class CalcParser(Parser):
         except LookupError:
             print(f"Undefined name '{p.NAME}'")
             return
-
-    
 
     @_("STR")
     def expr(self, p):

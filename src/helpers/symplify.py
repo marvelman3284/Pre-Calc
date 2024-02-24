@@ -1,5 +1,4 @@
 import sympy as sp
-from sympy import init_printing
 from sympy.abc import x
 from typing import Optional
 

@@ -18,6 +18,11 @@ class Point:
     def __ne__(self, __o: object) -> bool:
         return not self.__eq__(__o)
 
+    def __lt__(self, __o: object) -> bool:
+        if not isinstance(__o, Point):
+            raise TypeError(f"'<' not supported between instances of 'Point' and '{type(__o)}'")
+        return self.x < __o.x and self.y < __o.y
+
     def __len__(self) -> int:
         return 3 if self.z else 2
 

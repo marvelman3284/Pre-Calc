@@ -10,6 +10,8 @@ class CalcLexer(Lexer):
         NUMBER,
         STR,
         EQ,
+        GTE,
+        LTE,
         POW,
         EXIT,
         CLEAR,
@@ -19,10 +21,11 @@ class CalcLexer(Lexer):
         PRINT,
         NAME,
         RUN,
+        IF,
     }
     ignore = " \t"
     ignore_comment = r"\#.*"
-    literals = {".", "=", "+", "-", "*", "/", "?", "(", ")", ","}
+    literals = {".", "=", "+", "-", "*", "/", "?", "(", ")", ",", ">", "<"}
 
     # Tokens
     NAME = r"[a-zA-Z_][a-zA-Z0-9_]*"
@@ -37,6 +40,9 @@ class CalcLexer(Lexer):
     NAME["help"] = HELP
     NAME["print"] = PRINT
     NAME["run"] = RUN
+    NAME[">="] = GTE
+    NAME["<="] = LTE
+    NAME["if"] = IF
 
     @_(r"(\d+\.\d+)|(\d+)")
     def NUMBER(self, t):
